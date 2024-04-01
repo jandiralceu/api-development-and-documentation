@@ -1,6 +1,4 @@
-from sqlalchemy import Column, String, Integer
-
-from db import db
+from backend.flaskr.db import db
 
 
 class Category(db.Model):
@@ -9,7 +7,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String)
 
-    def __init__(self, type) -> None:
+    def __init__(self, type: str) -> None:
         self.type = type
 
     def format(self):

@@ -1,37 +1,42 @@
-import os
-from flask import Flask, request, abort, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from flask_cors import CORS
-import random
 
-from models import setup_db, Question, Category
+from db import setup_db
 
-QUESTIONS_PER_PAGE = 10
 
 def create_app(test_config=None):
-    # create and configure the app
     app = Flask(__name__)
 
     if test_config is None:
-        setup_db(app)
+        db_path = 'postgresql://{}/{}'.format(
+            'udacity:udacity2024@localhost:5432', 'trivia')
+
+        setup_db(app, database_path=db_path)
     else:
-        database_path = test_config.get('SQLALCHEMY_DATABASE_URI')
-        setup_db(app, database_path=database_path)
+        db_path = test_config.get('SQLALCHEMY_DATABASE_URI')
+        setup_db(app, database_path=db_path)
 
     """
     @TODO: Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs
     """
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     """
     @TODO: Use the after_request decorator to set Access-Control-Allow
     """
+    @app.after_request
+    def after_request_func(response):
+        response.headers.add('Access-Control-Allow-Headers',
+                             'Content-Type, Authorization')
+        response.headers.add('Access-Control-Allow-Methods',
+                             'GET, POST, PATCH, DELETE, OPTIONS')
+        return response
 
     """
     @TODO:
     Create an endpoint to handle GET requests
     for all available categories.
     """
-
 
     """
     @TODO:
@@ -104,4 +109,3 @@ def create_app(test_config=None):
     """
 
     return app
-
