@@ -1,0 +1,17 @@
+version: "3.1"
+
+services:
+  nanodegree:
+    image: bitnami/postgresql:14.8.0
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRESQL_USERNAME=udacity
+      - POSTGRESQL_PASSWORD=udacity2024
+      - POSTGRESQL_DATABASE=trivia
+    networks:
+      - udacity-network
+
+networks:
+  udacity-network:
+    driver: bridge
