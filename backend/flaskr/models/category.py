@@ -2,6 +2,7 @@ from sqlalchemy import Column, String, Integer
 
 from db import db
 
+
 class Category(db.Model):
     __tablename__ = 'categories'
 
@@ -15,4 +16,4 @@ class Category(db.Model):
         return {
             'id': self.id,
             'type': self.type
-            }
+        }

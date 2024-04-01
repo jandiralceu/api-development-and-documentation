@@ -1,5 +1,6 @@
 from db import db
 
+
 class Question(db.Model):
     __tablename__ = 'questions'
 
@@ -33,4 +34,4 @@ class Question(db.Model):
             'answer': self.answer,
             'category': self.category,
             'difficulty': self.difficulty
-            }
+        }
